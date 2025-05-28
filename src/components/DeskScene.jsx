@@ -1,7 +1,4 @@
 import { useTheme } from '../contexts/ThemeContext'
-import AboutPanel from './AboutPanel'
-import SkillsPanel from './SkillsPanel'
-import ContactPanel from './ContactPanel'
 import LaptopDisplay from './LaptopDisplay'
 import PhoneDisplay from './PhoneDisplay'
 import { motion } from 'framer-motion'
@@ -35,16 +32,6 @@ const deviceVariants = {
     y: 0, 
     rotateX: 0,
     transition: { duration: 0.7, ease: "easeOut" }
-  }
-}
-
-const panelVariants = {
-  initial: { opacity: 0, scale: 0.8, rotate: -5 },
-  animate: { 
-    opacity: 1, 
-    scale: 1, 
-    rotate: 0,
-    transition: { duration: 0.6, ease: "easeOut" }
   }
 }
 
@@ -91,9 +78,9 @@ const DeskScene = () => {
       animate="animate"
     >
       {/* Desk Surface */}
-      <div className="w-full px-4 py-4 sm:py-8">
+      <div className="w-full px-4 py-8 lg:py-16">
         <motion.div 
-          className={`relative rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl sm:shadow-2xl transition-colors duration-500 min-h-[90vh] sm:min-h-[85vh] lg:min-h-[80vh] w-full ${
+          className={`relative rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl sm:shadow-2xl transition-colors duration-500 min-h-[85vh] w-full ${
             isDark 
               ? 'bg-gradient-to-br from-gray-800 to-gray-700 shadow-black/50' 
               : 'bg-gradient-to-br from-amber-100 to-orange-200 shadow-orange-200/60'
@@ -103,7 +90,7 @@ const DeskScene = () => {
           
           {/* Main Displays Container */}
           <motion.div 
-            className="w-full h-full flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 p-4 sm:p-6 lg:p-8"
+            className="w-full h-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 p-6 sm:p-8 lg:p-12"
             variants={containerVariants}
           >
             
@@ -126,82 +113,14 @@ const DeskScene = () => {
             </motion.div>
           </motion.div>
 
-          {/* Panels Container - Desktop Only */}
-          <div className="hidden xl:block">
-            {/* About Panel - Top Left */}
-            <motion.div 
-              className="absolute top-8 xl:top-16 left-4 xl:left-8"
-              variants={panelVariants}
-              whileHover={{ 
-                scale: 1.05, 
-                rotate: 2,
-                transition: { duration: 0.3 }
-              }}
-            >
-              <AboutPanel />
-            </motion.div>
-
-            {/* Skills Panel - Top Right */}
-            <motion.div 
-              className="absolute top-8 xl:top-16 right-4 xl:right-8 max-w-xs xl:max-w-sm"
-              variants={panelVariants}
-              whileHover={{ 
-                scale: 1.02,
-                transition: { duration: 0.3 }
-              }}
-            >
-              <SkillsPanel />
-            </motion.div>
-
-            {/* Contact Panel - Bottom Center */}
-            <motion.div 
-              className="absolute bottom-6 xl:bottom-8 left-1/2 transform -translate-x-1/2"
-              variants={panelVariants}
-              whileHover={{ 
-                scale: 1.02,
-                y: -5,
-                transition: { duration: 0.3 }
-              }}
-            >
-              <ContactPanel />
-            </motion.div>
-          </div>
-
-          {/* Mobile/Tablet Panel Layout */}
-          <div className="xl:hidden">
-            {/* Panels Grid for Mobile/Tablet */}
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mt-6 sm:mt-8 px-4 sm:px-6"
-              variants={containerVariants}
-            >
-              {/* About Panel */}
-              <motion.div variants={panelVariants}>
-                <AboutPanel />
-              </motion.div>
-
-              {/* Skills Panel */}
-              <motion.div variants={panelVariants}>
-                <SkillsPanel />
-              </motion.div>
-
-              {/* Contact Panel - Full Width on Mobile */}
-              <motion.div 
-                className="md:col-span-2"
-                variants={panelVariants}
-              >
-                <ContactPanel />
-              </motion.div>
-            </motion.div>
-          </div>
-
           {/* Desk Accessories - Responsive */}
           <motion.div 
-            className="absolute bottom-2 sm:bottom-3 lg:bottom-4 left-2 sm:left-3 lg:left-4 flex gap-2 sm:gap-3 lg:gap-4"
+            className="absolute bottom-4 left-4 flex gap-3 lg:gap-4"
             variants={containerVariants}
           >
             {/* Coffee Cup */}
             <motion.div 
-              className={`w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 rounded-full transition-colors duration-500 flex items-center justify-center ${
+              className={`w-8 h-8 lg:w-10 lg:h-10 rounded-full transition-colors duration-500 flex items-center justify-center ${
                 isDark 
                   ? 'bg-amber-600 shadow-amber-600/50' 
                   : 'bg-amber-700 shadow-amber-700/30'
@@ -214,12 +133,12 @@ const DeskScene = () => {
                 transition: { duration: 0.3 }
               }}
             >
-              <div className="text-sm sm:text-base lg:text-lg">☕</div>
+              <div className="text-lg lg:text-xl">☕</div>
             </motion.div>
             
             {/* Notebook */}
             <motion.div 
-              className={`w-8 h-6 sm:w-10 sm:h-7 lg:w-12 lg:h-8 rounded transition-colors duration-500 flex items-center justify-center ${
+              className={`w-12 h-8 lg:w-14 lg:h-10 rounded transition-colors duration-500 flex items-center justify-center ${
                 isDark 
                   ? 'bg-blue-600 shadow-blue-600/50' 
                   : 'bg-blue-700 shadow-blue-700/30'
@@ -231,30 +150,63 @@ const DeskScene = () => {
                 transition: { duration: 0.3 }
               }}
             >
-              <div className="text-xs sm:text-sm text-white">📓</div>
+              <div className="text-sm text-white">📓</div>
             </motion.div>
           </motion.div>
 
           {/* Desk Lamp - Desktop Only in Dark Mode */}
           {isDark && (
             <motion.div 
-              className="hidden lg:block absolute bottom-2 sm:bottom-3 lg:bottom-4 right-2 sm:right-3 lg:right-4"
+              className="hidden lg:block absolute bottom-4 right-4"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.8 }}
             >
               <motion.div 
-                className="w-3 h-8 sm:w-4 sm:h-10 lg:w-4 lg:h-12 bg-yellow-300 rounded-full opacity-20 shadow-lg shadow-yellow-300/50"
+                className="w-4 h-12 bg-yellow-300 rounded-full opacity-20 shadow-lg shadow-yellow-300/50"
                 animate={lampGlow}
               />
               <motion.div 
-                className="text-lg sm:text-xl lg:text-2xl ml-1"
+                className="text-2xl ml-1"
                 animate={floatingAnimation}
               >
                 💡
               </motion.div>
             </motion.div>
           )}
+
+          {/* Scroll Down Indicator */}
+          <motion.div 
+            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
+          >
+            <motion.div 
+              className={`text-sm mb-2 ${
+                isDark ? 'text-gray-300' : 'text-gray-600'
+              }`}
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              Scroll to explore more
+            </motion.div>
+            <motion.div 
+              className={`w-6 h-10 border-2 rounded-full flex justify-center ${
+                isDark ? 'border-gray-300' : 'border-gray-600'
+              }`}
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <motion.div 
+                className={`w-1 h-3 rounded-full mt-2 ${
+                  isDark ? 'bg-gray-300' : 'bg-gray-600'
+                }`}
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </motion.div>
+          </motion.div>
         </motion.div>
       </div>
     </motion.div>

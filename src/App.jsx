@@ -1,6 +1,7 @@
 import { ThemeProvider } from './contexts/ThemeContext'
 import ThemeToggle from './components/ThemeToggle'
 import DeskScene from './components/DeskScene'
+import AboutSection from './components/AboutSection'
 import { motion } from 'framer-motion'
 
 // Animation variants for page entrance
@@ -31,7 +32,7 @@ function App() {
   return (
     <ThemeProvider>
       <motion.div 
-        className="relative w-full min-h-screen"
+        className="relative w-full"
         variants={pageVariants}
         initial="initial"
         animate="animate"
@@ -40,20 +41,25 @@ function App() {
           variants={staggerContainer}
           initial="initial"
           animate="animate"
-          className="w-full min-h-screen"
+          className="w-full"
         >
-          {/* Theme Toggle - Responsive positioning */}
+          {/* Theme Toggle - Fixed position across all sections */}
           <motion.div 
-            className="fixed top-4 right-4 sm:top-6 sm:right-6 lg:absolute lg:top-8 lg:right-8 z-20"
+            className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50"
             variants={fadeInUp}
           >
             <ThemeToggle />
           </motion.div>
           
-          {/* Main Desk Scene */}
-          <motion.div variants={fadeInUp} className="w-full">
+          {/* Section 1: Desk Scene */}
+          <motion.section variants={fadeInUp} className="w-full">
             <DeskScene />
-          </motion.div>
+          </motion.section>
+
+          {/* Section 2: About Section */}
+          <motion.section className="w-full">
+            <AboutSection />
+          </motion.section>
         </motion.div>
       </motion.div>
     </ThemeProvider>
