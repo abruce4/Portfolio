@@ -18,6 +18,9 @@ export default {
           dark: '#111827',   // gray-900
         }
       },
+      fontFamily: {
+        'handwriting': ['Kalam', 'Comic Sans MS', 'cursive'],
+      },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-in-out',
         'slide-up': 'slideUp 0.6s ease-out',
