@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import { motion } from 'framer-motion'
-import { ThemeContext } from '../contexts/ThemeContext'
+import { useTheme } from '../contexts/ThemeContext'
 
 const ProjectCard = ({ project }) => {
-  const { theme } = useContext(ThemeContext)
+  const { theme } = useTheme()
   
   const handleLiveClick = () => {
     if (project.liveUrl) {

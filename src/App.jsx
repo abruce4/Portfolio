@@ -31,7 +31,7 @@ function App() {
   return (
     <ThemeProvider>
       <motion.div 
-        className="relative"
+        className="relative w-full min-h-screen"
         variants={pageVariants}
         initial="initial"
         animate="animate"
@@ -40,6 +40,7 @@ function App() {
           variants={staggerContainer}
           initial="initial"
           animate="animate"
+          className="w-full min-h-screen"
         >
           {/* Theme Toggle - Responsive positioning */}
           <motion.div 
@@ -50,7 +51,7 @@ function App() {
           </motion.div>
           
           {/* Main Desk Scene */}
-          <motion.div variants={fadeInUp}>
+          <motion.div variants={fadeInUp} className="w-full">
             <DeskScene />
           </motion.div>
         </motion.div>

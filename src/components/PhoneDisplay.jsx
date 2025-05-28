@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
-import { useContext, useState, useEffect } from 'react';
-import { ThemeContext } from '../contexts/ThemeContext';
+import { useState, useEffect } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 import mobileProjects from '../data/mobileProjects';
 
 const PhoneDisplay = () => {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme();
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);

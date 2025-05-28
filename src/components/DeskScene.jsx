@@ -2,6 +2,8 @@ import { useTheme } from '../contexts/ThemeContext'
 import AboutPanel from './AboutPanel'
 import SkillsPanel from './SkillsPanel'
 import ContactPanel from './ContactPanel'
+import LaptopDisplay from './LaptopDisplay'
+import PhoneDisplay from './PhoneDisplay'
 import { motion } from 'framer-motion'
 
 // Animation variants
@@ -79,7 +81,7 @@ const DeskScene = () => {
 
   return (
     <motion.div 
-      className={`min-h-screen transition-colors duration-500 ${
+      className={`min-h-screen w-full transition-colors duration-500 ${
         isDark 
           ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900' 
           : 'bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100'
@@ -89,9 +91,9 @@ const DeskScene = () => {
       animate="animate"
     >
       {/* Desk Surface */}
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+      <div className="w-full px-4 py-4 sm:py-8">
         <motion.div 
-          className={`relative rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl sm:shadow-2xl transition-colors duration-500 min-h-[90vh] sm:min-h-[85vh] lg:min-h-[80vh] ${
+          className={`relative rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl sm:shadow-2xl transition-colors duration-500 min-h-[90vh] sm:min-h-[85vh] lg:min-h-[80vh] w-full ${
             isDark 
               ? 'bg-gradient-to-br from-gray-800 to-gray-700 shadow-black/50' 
               : 'bg-gradient-to-br from-amber-100 to-orange-200 shadow-orange-200/60'
@@ -99,178 +101,36 @@ const DeskScene = () => {
           variants={deskVariants}
         >
           
-          {/* Desk Items Container */}
+          {/* Main Displays Container */}
           <motion.div 
-            className="flex flex-col xl:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-8 xl:gap-16 p-4 sm:p-6 lg:p-8 xl:p-16"
+            className="w-full h-full flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 p-4 sm:p-6 lg:p-8"
             variants={containerVariants}
           >
             
-            {/* Laptop Display Area */}
+            {/* Laptop Display Area - Left Side */}
             <motion.div 
-              className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl xl:flex-1"
+              className="w-full lg:w-1/2 flex justify-center lg:justify-start"
               variants={deviceVariants}
             >
-              <motion.div 
-                className={`relative rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg sm:shadow-xl transition-colors duration-500 ${
-                  isDark 
-                    ? 'bg-gray-900 shadow-black/40' 
-                    : 'bg-gray-800 shadow-gray-400/30'
-                }`}
-                whileHover={{ 
-                  scale: 1.02,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                {/* Laptop Screen */}
-                <div className="aspect-[16/10] p-2 sm:p-3 lg:p-4">
-                  <motion.div 
-                    className={`w-full h-full rounded-md sm:rounded-lg border-2 transition-colors duration-500 ${
-                      isDark 
-                        ? 'bg-gray-800 border-gray-600' 
-                        : 'bg-white border-gray-300'
-                    }`}
-                    whileHover={{ 
-                      borderColor: isDark ? '#3B82F6' : '#2563EB',
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    {/* Placeholder content for web projects */}
-                    <motion.div 
-                      className="h-full flex flex-col items-center justify-center text-center p-3 sm:p-4 lg:p-8"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, delay: 0.3 }}
-                    >
-                      <motion.div 
-                        className={`text-3xl sm:text-4xl lg:text-5xl xl:text-6xl mb-2 sm:mb-3 lg:mb-4 ${
-                          isDark ? 'text-blue-400' : 'text-blue-600'
-                        }`}
-                        animate={floatingAnimation}
-                      >
-                        💻
-                      </motion.div>
-                      <motion.h3 
-                        className={`text-sm sm:text-base lg:text-lg xl:text-xl font-semibold mb-1 sm:mb-2 ${
-                          isDark ? 'text-gray-200' : 'text-gray-800'
-                        }`}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                      >
-                        Web Projects
-                      </motion.h3>
-                      <motion.p 
-                        className={`text-xs sm:text-sm lg:text-sm ${
-                          isDark ? 'text-gray-400' : 'text-gray-600'
-                        }`}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.7 }}
-                      >
-                        Interactive web applications showcase
-                      </motion.p>
-                    </motion.div>
-                  </motion.div>
-                </div>
-                
-                {/* Laptop Base */}
-                <div className={`h-3 sm:h-4 lg:h-6 rounded-b-lg sm:rounded-b-xl lg:rounded-b-2xl transition-colors duration-500 ${
-                  isDark 
-                    ? 'bg-gray-700' 
-                    : 'bg-gray-600'
-                }`}></div>
-              </motion.div>
+              <div className="w-full max-w-2xl">
+                <LaptopDisplay />
+              </div>
             </motion.div>
 
-            {/* Phone Display Area */}
+            {/* Phone Display Area - Right Side */}
             <motion.div 
-              className="flex-shrink-0"
+              className="w-full lg:w-1/2 flex justify-center lg:justify-end"
               variants={deviceVariants}
             >
-              <motion.div 
-                className={`relative rounded-2xl sm:rounded-3xl shadow-lg sm:shadow-xl transition-colors duration-500 ${
-                  isDark 
-                    ? 'bg-gray-900 shadow-black/40' 
-                    : 'bg-gray-800 shadow-gray-400/30'
-                }`}
-                whileHover={{ 
-                  scale: 1.05,
-                  rotateY: 5,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                {/* Phone Screen */}
-                <div className="w-48 h-[350px] sm:w-56 sm:h-[420px] lg:w-64 lg:h-[500px] p-2 sm:p-3">
-                  <motion.div 
-                    className={`w-full h-full rounded-xl sm:rounded-2xl border-2 transition-colors duration-500 ${
-                      isDark 
-                        ? 'bg-gray-800 border-gray-600' 
-                        : 'bg-white border-gray-300'
-                    }`}
-                    whileHover={{ 
-                      borderColor: isDark ? '#10B981' : '#059669',
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    {/* Notch */}
-                    <motion.div 
-                      className={`w-24 h-4 sm:w-28 sm:h-5 lg:w-32 lg:h-6 mx-auto mt-1 sm:mt-2 rounded-full transition-colors duration-500 ${
-                        isDark 
-                          ? 'bg-gray-900' 
-                          : 'bg-gray-200'
-                      }`}
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.5, delay: 0.4 }}
-                    />
-                    
-                    {/* Placeholder content for mobile projects */}
-                    <motion.div 
-                      className="h-full flex flex-col items-center justify-center text-center p-3 sm:p-4 lg:p-6"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, delay: 0.4 }}
-                    >
-                      <motion.div 
-                        className={`text-3xl sm:text-4xl lg:text-5xl mb-2 sm:mb-3 lg:mb-4 ${
-                          isDark ? 'text-green-400' : 'text-green-600'
-                        }`}
-                        animate={floatingAnimation}
-                      >
-                        📱
-                      </motion.div>
-                      <motion.h3 
-                        className={`text-sm sm:text-base lg:text-lg font-semibold mb-1 sm:mb-2 ${
-                          isDark ? 'text-gray-200' : 'text-gray-800'
-                        }`}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.6 }}
-                      >
-                        Mobile Apps
-                      </motion.h3>
-                      <motion.p 
-                        className={`text-xs sm:text-xs lg:text-xs ${
-                          isDark ? 'text-gray-400' : 'text-gray-600'
-                        }`}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.8 }}
-                      >
-                        React Native & mobile demos
-                      </motion.p>
-                    </motion.div>
-                  </motion.div>
-                </div>
-              </motion.div>
+              <PhoneDisplay />
             </motion.div>
           </motion.div>
 
           {/* Panels Container - Desktop Only */}
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             {/* About Panel - Top Left */}
             <motion.div 
-              className="absolute top-8 lg:top-12 xl:top-16 left-2 lg:left-4 xl:left-8"
+              className="absolute top-8 xl:top-16 left-4 xl:left-8"
               variants={panelVariants}
               whileHover={{ 
                 scale: 1.05, 
@@ -283,7 +143,7 @@ const DeskScene = () => {
 
             {/* Skills Panel - Top Right */}
             <motion.div 
-              className="absolute top-8 lg:top-12 xl:top-16 right-2 lg:right-4 xl:right-8 max-w-xs lg:max-w-sm"
+              className="absolute top-8 xl:top-16 right-4 xl:right-8 max-w-xs xl:max-w-sm"
               variants={panelVariants}
               whileHover={{ 
                 scale: 1.02,
@@ -295,7 +155,7 @@ const DeskScene = () => {
 
             {/* Contact Panel - Bottom Center */}
             <motion.div 
-              className="absolute bottom-4 lg:bottom-6 xl:bottom-8 left-1/2 transform -translate-x-1/2"
+              className="absolute bottom-6 xl:bottom-8 left-1/2 transform -translate-x-1/2"
               variants={panelVariants}
               whileHover={{ 
                 scale: 1.02,
@@ -308,7 +168,7 @@ const DeskScene = () => {
           </div>
 
           {/* Mobile/Tablet Panel Layout */}
-          <div className="lg:hidden">
+          <div className="xl:hidden">
             {/* Panels Grid for Mobile/Tablet */}
             <motion.div 
               className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mt-6 sm:mt-8 px-4 sm:px-6"
