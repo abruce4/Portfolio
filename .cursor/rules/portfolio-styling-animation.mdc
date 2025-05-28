@@ -1,0 +1,79 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Portfolio Styling & Animation Guidelines
+
+This Interactive Developer Desk Portfolio uses specific styling and animation patterns. Follow these guidelines for consistent visual design.
+
+## Styling Framework
+
+### Tailwind CSS Configuration
+- Configure theme colors for light/dark modes
+- Define custom spacing and breakpoints for desk layout
+- Use utility classes for responsive design
+- Implement custom CSS variables for theme transitions
+
+### Theme System
+```javascript
+// ThemeContext patterns
+const themes = {
+  light: {
+    background: 'bg-amber-50',
+    desk: 'bg-amber-100',
+    text: 'text-gray-900',
+    accent: 'text-blue-600'
+  },
+  dark: {
+    background: 'bg-gray-900',
+    desk: 'bg-gray-800', 
+    text: 'text-gray-100',
+    accent: 'text-blue-400'
+  }
+}
+```
+
+## Animation Framework
+
+### Framer Motion Patterns
+- Use `motion.div` for component entrance animations
+- Implement `whileHover` and `whileTap` for interactive elements
+- Add `initial`, `animate`, `exit` props for smooth transitions
+- Use `AnimatePresence` for conditional rendering
+
+### Animation Guidelines
+- Auto-cycling components pause on hover
+- Theme transitions should be smooth (300ms duration)
+- Entrance animations stagger for visual hierarchy
+- Mobile scroll/swipe animations feel natural
+- Loading states use subtle pulse animations
+
+### Common Animation Patterns
+```javascript
+// Entrance animation
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 }
+}
+
+// Hover effects
+const hoverScale = {
+  whileHover: { scale: 1.05 },
+  whileTap: { scale: 0.95 }
+}
+```
+
+## Responsive Design
+- Mobile-first approach with Tailwind breakpoints
+- Desk layout adapts to screen sizes
+- Touch-friendly interactions on mobile devices
+- Maintain visual hierarchy across all devices
+
+## Visual Effects
+- Consider Lottie animations for complex interactions
+- Use CSS gradients for lighting effects
+- Implement subtle shadows for depth
+- Add visual feedback for all interactive elements
+

@@ -1,0 +1,60 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Portfolio Component Architecture
+
+This Interactive Developer Desk Portfolio has specific component responsibilities and patterns. Follow these guidelines when developing components.
+
+## Core Components & Responsibilities
+
+### Layout Components
+- **DeskScene**: Master layout showing phone, laptop, and desk environment
+- **MainLayout**: Overall page structure and theme provider wrapper
+
+### Display Components
+- **LaptopDisplay**: Renders web projects with tabs/iframes, handles auto-cycling
+- **PhoneDisplay**: Animates mobile app demos with scroll/swipe effects
+- **ProjectCard**: Hoverable project summary with tech stack tooltips
+
+### Panel Components
+- **SkillsPanel**: Interactive skill icons with click animations
+- **AboutPanel**: Developer bio in stylized "sticky note" UI
+- **ContactPanel**: Contact form with resume download capability
+- **ThemeToggle**: Day/night or light/dark mode switcher
+
+## Component Patterns
+
+### State Management
+- Use `useContext(ThemeContext)` for theme-aware components
+- Local state for component-specific UI (modals, hover states)
+- Custom hooks for shared logic (auto-cycling, animations)
+
+### Props Structure
+```javascript
+// ProjectCard example
+<ProjectCard
+  project={{
+    id: 1,
+    title: "Project Name",
+    tech: ["React", "Tailwind"],
+    liveUrl: "https://...",
+    github: "https://...",
+    image: "/assets/project.png",
+    description: "Project description"
+  }}
+/>
+```
+
+### Animation Guidelines
+- Use Framer Motion for transitions and entrance animations
+- Implement pause-on-hover for auto-cycling components
+- Add smooth theme transition animations
+- Consider Lottie for complex animations (typing, hand gestures)
+
+## Component Dependencies
+- All components should be theme-aware via ThemeContext
+- Use Tailwind classes for styling with theme variants
+- Implement responsive design patterns for mobile/tablet/desktop
+

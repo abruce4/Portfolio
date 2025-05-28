@@ -1,0 +1,67 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Portfolio Data Structure & Services
+
+This project uses specific data structures and service patterns. Follow these guidelines for consistent data management.
+
+## Project Data Structure
+
+### Web Projects ([webProjects.js](mdc:src/data/webProjects.js))
+```javascript
+export default [
+  {
+    id: 1,
+    title: "Portfolio Website",
+    tech: ["React", "Tailwind", "Framer Motion"],
+    liveUrl: "https://...",
+    github: "https://...",
+    image: "/assets/portfolio.png",
+    description: "A dynamic developer portfolio built with React."
+  }
+]
+```
+
+### Mobile Projects ([mobileProjects.js](mdc:src/data/mobileProjects.js))
+```javascript
+export default [
+  {
+    id: 1,
+    title: "Mobile App Name",
+    tech: ["React Native", "Expo"],
+    demoVideo: "/videos/app-demo.mp4",
+    github: "https://...",
+    playStore: "https://...",
+    appStore: "https://...",
+    description: "Mobile app description"
+  }
+]
+```
+
+## Service Layer Structure
+
+### Email Service ([emailService.js](mdc:src/services/emailService.js))
+- Use EmailJS or Formspree for contact form functionality
+- Handle form validation and submission
+- Provide user feedback for success/error states
+
+### Analytics Service ([analytics.js](mdc:src/services/analytics.js))
+- Optional Google Analytics integration
+- Track page visits and user interactions
+- Privacy-compliant event tracking
+
+## Data Validation
+- Ensure all project objects have required fields
+- Validate URLs before rendering links
+- Handle missing images with placeholder fallbacks
+- Implement error boundaries for data loading failures
+
+## Asset Management
+- Store images in `public/assets/` directory
+- Use consistent naming: project-name.png, skill-icon.svg
+- Store demo videos in `public/videos/`
+- Optimize images for web (WebP format preferred)
+- Implement lazy loading for performance
+

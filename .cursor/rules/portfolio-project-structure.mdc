@@ -1,0 +1,47 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Portfolio Project Structure Guide
+
+This project follows a specific folder structure for the Interactive Developer Desk Portfolio. Always maintain this structure when creating new files or components.
+
+## Core Structure
+```
+portfolio/
+├── public/
+│   ├── assets/                # Static images, Lottie JSONs, icons
+│   └── videos/                # Demo screen recordings or auto-scrolling videos
+├── src/
+│   ├── components/            # Reusable UI components
+│   ├── contexts/              # Context for global state
+│   ├── data/                  # JSON/TS files with project info
+│   ├── hooks/                 # Custom React hooks
+│   ├── layouts/               # Page layouts
+│   ├── services/              # Utilities or external integrations
+│   └── styles/                # Tailwind config and global styles
+```
+
+## Component Organization
+- Place all reusable components in `src/components/`
+- Use PascalCase for component file names (e.g., `DeskScene.jsx`)
+- Keep components focused on single responsibilities
+- Export components as default exports
+
+## Data Management
+- Store project data in `src/data/` as JavaScript files
+- Use consistent naming: `webProjects.js`, `mobileProjects.js`
+- Export data as default arrays of objects
+
+## State Management
+- Global state goes in `src/contexts/ThemeContext.jsx`
+- Local component state for UI-specific functionality
+- Custom hooks in `src/hooks/` for reusable logic
+
+## File Naming Conventions
+- Components: PascalCase (e.g., `ProjectCard.jsx`)
+- Hooks: camelCase starting with "use" (e.g., `useAutoCycle.jsx`)
+- Data files: camelCase (e.g., `webProjects.js`)
+- Services: camelCase (e.g., `emailService.js`)
+

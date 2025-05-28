@@ -1,0 +1,62 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Portfolio Development Phases
+
+This project follows a structured 8-phase development approach. Always complete phases in order and ensure each phase's end criteria are met before proceeding.
+
+## Phase Progression
+
+### Phase 1: Project Setup (Tasks 1-4)
+**Goal**: Establish basic project foundation
+- Initialize Vite React project with proper folder structure
+- Install core dependencies: react, tailwindcss, framer-motion, classnames
+- Configure Tailwind CSS for styling system
+- Create organized folder structure in `src/`
+
+### Phase 2: Global Theme Toggle (Tasks 5-7)
+**Goal**: Implement theme switching functionality
+- Create [ThemeContext.jsx](mdc:src/contexts/ThemeContext.jsx) for global state
+- Wrap App component with ThemeProvider
+- Build functional ThemeToggle component
+
+### Phase 3: DeskScene Layout (Tasks 8-9)
+**Goal**: Create main desk environment
+- Build static layout with device positioning
+- Integrate theme-aware background changes
+
+### Phase 4: Laptop Display (Tasks 10-13)
+**Goal**: Web project showcase functionality
+- Create [webProjects.js](mdc:src/data/webProjects.js) data file
+- Build ProjectCard and LaptopDisplay components
+- Implement auto-cycling with [useAutoCycle.jsx](mdc:src/hooks/useAutoCycle.jsx)
+
+### Phase 5: Phone Display (Tasks 14-16)
+**Goal**: Mobile project demonstration
+- Create [mobileProjects.js](mdc:src/data/mobileProjects.js) data file
+- Build PhoneDisplay with mobile UI animations
+- Add project switching or scroll simulation
+
+### Phase 6: Interactive Panels (Tasks 17-19)
+**Goal**: Additional portfolio sections
+- AboutPanel, SkillsPanel, and ContactPanel components
+- Interactive elements and form functionality
+
+### Phase 7: Polish & Animation (Tasks 20-22)
+**Goal**: Enhanced user experience
+- Add Framer Motion animations throughout
+- Implement responsive design patterns
+- Perfect theme transition effects
+
+### Phase 8: Deployment (Task 23)
+**Goal**: Live portfolio
+- Deploy to Vercel or Netlify with working domain
+
+## Development Guidelines
+- Complete each task's "End" criteria before moving to next task
+- Test theme switching functionality at each phase
+- Maintain responsive design throughout development
+- Use consistent component patterns established in early phases
+
