@@ -1,30 +1,32 @@
-import { useState } from 'react'
+import { ThemeProvider } from './contexts/ThemeContext'
+import ThemeToggle from './components/ThemeToggle'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
-      <div className="max-w-4xl mx-auto p-8 text-center">
-        <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-8">
-          Interactive Developer Desk Portfolio
-        </h1>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-8">
-          <button 
-            onClick={() => setCount((count) => count + 1)}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200"
-          >
-            count is {count}
-          </button>
-          <p className="mt-4 text-gray-600 dark:text-gray-300">
-            Edit <code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">src/App.jsx</code> and save to test HMR
-          </p>
+    <ThemeProvider>
+      <div className="min-h-screen bg-surface-light dark:bg-surface-dark transition-colors duration-300">
+        {/* Theme Toggle - positioned in top right */}
+        <div className="absolute top-8 right-8 z-10">
+          <ThemeToggle />
         </div>
-        <p className="text-gray-500 dark:text-gray-400">
-          Portfolio setup complete. Tailwind CSS is working! ✨
-        </p>
+        
+        <div className="container mx-auto p-8">
+          <div className="text-center">
+            <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-8 animate-fade-in">
+              Interactive Developer Desk Portfolio
+            </h1>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-8 animate-slide-up">
+              <p className="text-gray-600 dark:text-gray-300 text-lg">
+                🚀 Project initialized successfully!
+              </p>
+              <p className="text-gray-500 dark:text-gray-400 mt-4">
+                ThemeProvider is now active. Try the theme toggle in the top right! ✨
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   )
 }
 
