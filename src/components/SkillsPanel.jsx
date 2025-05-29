@@ -33,11 +33,11 @@ const SkillsPanel = () => {
     },
     {
       id: 4,
-      name: 'TypeScript',
-      icon: '🔷',
-      level: 80,
+      name: 'Firebase',
+      icon: '🔥',
+      level: 95,
       description: 'Type-safe development and large-scale application architecture',
-      color: 'from-blue-500 to-indigo-600'
+      color: 'from-yellow-400 to-yellow-600'
     },
     {
       id: 5,
@@ -49,11 +49,11 @@ const SkillsPanel = () => {
     },
     {
       id: 6,
-      name: 'MongoDB',
-      icon: '🍃',
-      level: 78,
+      name: 'Wordpress',
+      icon: '💻',
+      level: 90,
       description: 'NoSQL database design, aggregation, and performance optimization',
-      color: 'from-green-500 to-green-700'
+      color: 'from-blue-500 to-blue-700'
     }
   ];
 

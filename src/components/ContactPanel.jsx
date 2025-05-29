@@ -9,7 +9,6 @@ const ContactPanel = () => {
     email: '',
     message: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -52,41 +51,52 @@ const ContactPanel = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     
     if (!validateForm()) {
       return;
     }
 
-    setIsSubmitting(true);
+    // Create Gmail compose URL with form data
+    const to = encodeURIComponent('lincolnbruce30@gmail.com');
+    const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Hi Lincoln,\n\n${formData.message}\n\nBest regards,\n${formData.name}\n\nReply to: ${formData.email}`
+    );
     
-    // Simulate form submission delay
+    // Gmail compose URL format
+    const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&to=${to}&su=${subject}&body=${body}`;
+    
+    // Open Gmail compose in new tab
+    window.open(gmailComposeUrl, '_blank');
+    
+    // Show success message
+    setShowSuccess(true);
+    console.log('📧 Opening Gmail compose with pre-filled data');
+    
+    // Reset form after a short delay
     setTimeout(() => {
-      // Log form data to console (as per task requirements)
-      console.log('📧 Contact Form Submission:', {
-        name: formData.name,
-        email: formData.email,
-        message: formData.message,
-        timestamp: new Date().toISOString()
-      });
-      
-      setIsSubmitting(false);
-      setShowSuccess(true);
-      
-      // Reset form
       setFormData({ name: '', email: '', message: '' });
-      
-      // Hide success message after 3 seconds
-      setTimeout(() => setShowSuccess(false), 3000);
-    }, 1500);
+    }, 1000);
+    
+    // Hide success message after 5 seconds
+    setTimeout(() => setShowSuccess(false), 5000);
   };
 
   const downloadResume = () => {
-    // Placeholder for resume download
-    console.log('📄 Resume download requested');
-    // In a real implementation, this would trigger a download
-    alert('Resume download feature coming soon!');
+    // Create a link element and trigger download
+    const link = document.createElement('a');
+    link.href = '/assets/Lincoln_Bruce_Resume.pdf'; // Your resume file path
+    link.download = 'Lincoln_Bruce_Resume.pdf'; // Downloaded file name
+    link.target = '_blank';
+    
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    console.log('📄 Resume download initiated');
   };
 
   return (
@@ -135,7 +145,7 @@ const ContactPanel = () => {
               }`}
             >
               <span className="text-base sm:text-lg mr-2">✅</span>
-              Message sent successfully!
+              Gmail opened in new tab! Complete sending from there.
             </motion.div>
           )}
         </AnimatePresence>
@@ -244,34 +254,18 @@ const ContactPanel = () => {
           {/* Submit Button */}
           <motion.button
             type="submit"
-            disabled={isSubmitting}
             className={`w-full py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 ${
-              isSubmitting
-                ? 'opacity-50 cursor-not-allowed'
-                : 'hover:shadow-lg'
-            } ${
               isDark 
                 ? 'bg-blue-600 hover:bg-blue-700 text-white' 
                 : 'bg-blue-600 hover:bg-blue-700 text-white'
             }`}
-            whileHover={!isSubmitting ? { scale: 1.05 } : {}}
-            whileTap={!isSubmitting ? { scale: 0.95 } : {}}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            {isSubmitting ? (
-              <span className="flex items-center justify-center gap-2">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
-                />
-                Sending...
-              </span>
-            ) : (
-              <span className="flex items-center justify-center gap-2">
-                <span>Send Message</span>
-                <span>📤</span>
-              </span>
-            )}
+            <span className="flex items-center justify-center gap-2">
+              <span>Send Message</span>
+              <span>📤</span>
+            </span>
           </motion.button>
         </form>
 
@@ -300,7 +294,7 @@ const ContactPanel = () => {
         }`}>
           <p>Or reach out directly:</p>
           <p className="mt-1">
-            <span className="font-medium">alex.dev@example.com</span>
+            <span className="font-medium">lincolnbruce30@gmail.com</span>
           </p>
         </div>
       </div>

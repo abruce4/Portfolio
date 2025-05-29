@@ -61,10 +61,10 @@ const AboutPanel = () => {
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <span className="text-lg sm:text-xl">👋</span>
-              <span className="font-semibold text-sm sm:text-base">Hi, I'm Alex!</span>
+              <span className="font-semibold text-sm sm:text-base">Hi, I'm Lincoln!</span>
             </div>
             <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
-              Full-Stack Developer passionate about creating amazing user experiences.
+              Full-Stack Developer passionate about creating web and mobile applications.
             </p>
           </div>
 
@@ -88,25 +88,25 @@ const AboutPanel = () => {
                   <div className="flex items-start gap-2">
                     <span>📍</span>
                     <span>
-                      <strong>Location:</strong> San Francisco, CA
+                      <strong>Location:</strong> Atlanta, GA
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span>💼</span>
                     <span>
-                      <strong>Experience:</strong> 5+ years building scalable applications
+                      <strong>Experience:</strong> 2+ years building scalable applications
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span>🌟</span>
                     <span>
-                      <strong>Passion:</strong> Clean code, user-centric design, and continuous learning
+                      <strong>Passion:</strong> Games, sports, and new technologies
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span>🎉</span>
                     <span>
-                      <strong>Fun Fact:</strong> I debug with rubber ducks and fuel creativity with coffee!
+                      <strong>Fun Fact:</strong> I love traveling.
                     </span>
                   </div>
                 </div>

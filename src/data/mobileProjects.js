@@ -1,22 +1,22 @@
 export default [
   {
     id: 1,
-    title: "TaskFlow Mobile",
-    tech: ["React Native", "Expo", "TypeScript"],
-    demoVideo: "/videos/taskflow-demo.mp4",
-    github: "https://github.com/lincx/taskflow-mobile",
-    playStore: "https://play.google.com/store/apps/details?id=com.taskflow",
-    appStore: "https://apps.apple.com/app/taskflow/id123456789",
-    description: "A productivity app that helps teams manage tasks with real-time collaboration and smart notifications."
+    title: "LN MAQUIS",
+    tech: ["React Native", "Expo", "Firebase"],
+    image: "/assets/ln-maquis-mobile.png",
+    github: "https://github.com/abruce4/lnmaquis",
+    playStore: "",
+    appStore: "https://testflight.apple.com/join/KTcB2cCQ",
+    description: "A mobile app for a local restaurant, built with React Native and Expo."
   },
   {
     id: 2,
-    title: "Weather Compass",
-    tech: ["React Native", "Redux", "Maps API"],
-    demoVideo: "/videos/weather-compass-demo.mp4",
-    github: "https://github.com/lincx/weather-compass",
-    playStore: "https://play.google.com/store/apps/details?id=com.weathercompass",
-    appStore: "https://apps.apple.com/app/weather-compass/id987654321",
-    description: "Location-based weather app with interactive maps, hourly forecasts, and outdoor activity recommendations."
+    title: "HydrateNow",
+    tech: ["React Native", "Expo", "TypeScript"],
+    image: "/assets/hydratenow-mobile.png",
+    github: "https://github.com/abruce4/HydrateNow",
+    playStore: "https://play.google.com/store/apps/details?id=com.abruce4.hydratenow",
+    appStore: "",
+    description: "A water tracking app."
   }
 ] 

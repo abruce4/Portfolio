@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import mobileProjects from '../data/mobileProjects';
@@ -18,267 +18,370 @@ const PhoneDisplay = () => {
       setCurrentProjectIndex((prevIndex) => 
         (prevIndex + 1) % mobileProjects.length
       );
-    }, 4000); // Switch every 4 seconds
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [isAutoPlaying, isHovered]);
 
-  const phoneVariants = {
-    initial: { opacity: 0, scale: 0.8 },
-    animate: { opacity: 1, scale: 1 },
-    transition: { duration: 0.6 }
-  };
-
-  const screenVariants = {
-    initial: { x: 50, opacity: 0 },
-    animate: { x: 0, opacity: 1 },
-    exit: { x: -50, opacity: 0 },
-    transition: { duration: 0.5, ease: "easeInOut" }
-  };
-
-  // Enhanced swipe-like animation for content
-  const contentVariants = {
-    initial: { x: 30, opacity: 0 },
-    animate: { x: 0, opacity: 1 },
-    exit: { x: -30, opacity: 0 },
-    transition: { duration: 0.4, ease: "easeOut" }
-  };
-
   const handleProjectSwitch = (index) => {
     setCurrentProjectIndex(index);
-    setIsAutoPlaying(false); // Pause auto-play when manually switching
-    
-    // Resume auto-play after 8 seconds of manual interaction
+    setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 8000);
   };
 
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
 
+  const handleLiveClick = () => {
+    if (currentProject.playStore) {
+      window.open(currentProject.playStore, '_blank', 'noopener,noreferrer')
+    }
+  }
+  
+  const handleGithubClick = () => {
+    if (currentProject.github) {
+      window.open(currentProject.github, '_blank', 'noopener,noreferrer')
+    }
+  }
+
   return (
     <motion.div 
       className="flex flex-col items-center"
-      {...phoneVariants}
+      initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
+      animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+      transition={{ duration: 1.2, ease: "easeOut" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      style={{ perspective: '1000px' }}
     >
+      {/* Phone Shadow */}
+      <div className="absolute inset-0 top-8 bg-black/30 blur-2xl rounded-[3rem] transform scale-90" />
+      
       {/* Phone Frame */}
-      <div className={`
-        relative w-64 h-[500px] 
-        ${theme === 'light' ? 'bg-gray-800' : 'bg-gray-700'} 
-        rounded-[2.5rem] p-4 shadow-2xl
-      `}>
-        {/* Phone Screen */}
-        <motion.div 
-          className={`
-            w-full h-full rounded-[2rem] overflow-hidden
-            ${theme === 'light' ? 'bg-white' : 'bg-gray-900'}
-          `}
-          key={currentProjectIndex}
-          {...screenVariants}
-        >
-          {/* Status Bar */}
+      <motion.div 
+        className={`
+          relative w-72 h-[600px] 
+          ${theme === 'light' ? 'bg-gray-900' : 'bg-gray-800'} 
+          rounded-[2.5rem] p-2 shadow-2xl
+          border-4 border-gray-700
+        `}
+        whileHover={{ 
+          rotateY: 5, 
+          scale: 1.03,
+          boxShadow: theme === 'light' 
+            ? '0 25px 50px -12px rgba(0, 0, 0, 0.4)' 
+            : '0 25px 50px -12px rgba(0, 0, 0, 0.6)'
+        }}
+        transition={{ duration: 0.3 }}
+      >
+        {/* Camera Notch */}
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-10">
           <div className={`
-            flex justify-between items-center px-4 py-2 text-xs
-            ${theme === 'light' ? 'bg-gray-100 text-gray-800' : 'bg-gray-800 text-gray-200'}
+            w-32 h-6 rounded-full flex items-center justify-center
+            ${theme === 'light' ? 'bg-gray-900' : 'bg-gray-800'}
           `}>
-            <span>9:41</span>
-            <div className="flex space-x-1">
-              <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-              <div className="w-3 h-2 border border-current rounded-sm">
-                <div className="w-2 h-1 bg-current rounded-sm"></div>
-              </div>
+            <div className="w-12 h-3 bg-gray-700 rounded-full flex items-center justify-center">
+              <div className="w-2 h-2 bg-gray-600 rounded-full mr-1" />
+              <div className="w-6 h-1 bg-gray-600 rounded-full" />
             </div>
           </div>
+        </div>
 
-          {/* App Content with swipe animation */}
+        {/* Phone Screen */}
+        <AnimatePresence mode="wait">
           <motion.div 
-            className="flex-1 p-4"
-            key={`content-${currentProjectIndex}`}
-            {...contentVariants}
+            key={currentProjectIndex}
+            className={`
+              w-full h-full rounded-[2rem] overflow-hidden flex flex-col
+              ${theme === 'light' ? 'bg-white' : 'bg-gray-900'}
+              shadow-inner border border-gray-600
+            `}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.5 }}
           >
-            {/* App Header */}
-            <div className="flex items-center justify-between mb-4">
-              <h3 className={`text-lg font-bold ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
-                {currentProject.title}
-              </h3>
-              <div className="flex space-x-1">
-                <div className="w-6 h-6 bg-blue-500 rounded-full"></div>
-                <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
+            {/* Status Bar */}
+            <motion.div 
+              className={`
+                flex justify-between items-center px-6 py-3 text-sm font-medium flex-shrink-0
+                ${theme === 'light' ? 'bg-white text-gray-900' : 'bg-gray-900 text-white'}
+              `}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <span>9:41</span>
+              <div className="flex items-center space-x-1">
+                <motion.div 
+                  className="w-1 h-1 bg-green-500 rounded-full"
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                <div className="flex items-center">
+                  <div className="w-6 h-3 border border-current rounded-sm mr-1">
+                    <motion.div 
+                      className="w-4 h-1.5 bg-green-500 rounded-sm mt-0.5 ml-0.5"
+                      animate={{ width: [16, 8, 16] }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    />
+                  </div>
+                  <span className="text-xs">100%</span>
+                </div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Tech Stack */}
-            <div className="flex flex-wrap gap-1 mb-4">
-              {currentProject.tech.map((tech, index) => (
-                <motion.span 
-                  key={tech}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: index * 0.1, duration: 0.3 }}
-                  className={`
-                    px-2 py-1 text-xs rounded-full
-                    ${theme === 'light' 
-                      ? 'bg-blue-100 text-blue-800' 
-                      : 'bg-blue-900 text-blue-200'
-                    }
-                  `}
+            {/* App Content */}
+            <motion.div 
+              className="flex-1 p-4 flex flex-col"
+              key={`content-${currentProjectIndex}`}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              {/* App Header */}
+              <motion.div 
+                className="flex items-center justify-between mb-4"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                <div className="flex-1">
+                  <h3 className={`text-lg font-bold mb-1 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
+                    {currentProject.title}
+                  </h3>
+                  <p className={`text-xs ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>
+                    {currentProject.description}
+                  </p>
+                </div>
+                <motion.div 
+                  className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg ml-3"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  {tech}
-                </motion.span>
-              ))}
-            </div>
+                  <span className="text-white text-sm">📱</span>
+                </motion.div>
+              </motion.div>
 
-            {/* Mock App Interface */}
-            <div className="space-y-3">
-              {/* Navigation Bar */}
-              <div className={`
-                flex justify-around p-2 rounded-lg
-                ${theme === 'light' ? 'bg-gray-100' : 'bg-gray-800'}
-              `}>
-                {['Home', 'Projects', 'Profile'].map((tab, index) => (
-                  <button 
-                    key={tab}
+              {/* Project Image */}
+              <motion.div 
+                className="mb-4"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <motion.img
+                  src={currentProject.image}
+                  alt={currentProject.title}
+                  className={`
+                    w-full h-32 object-cover rounded-lg cursor-pointer
+                    ${theme === 'light' ? 'border border-gray-200' : 'border border-gray-700'}
+                  `}
+                  onClick={() => window.open(currentProject.image, '_blank')}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                />
+              </motion.div>
+
+              {/* Tech Stack Pills */}
+              <motion.div 
+                className="flex flex-wrap gap-1.5 mb-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                {currentProject.tech.map((tech, index) => (
+                  <motion.span 
+                    key={tech}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.3 + index * 0.1, duration: 0.3 }}
                     className={`
-                      px-3 py-1 text-xs rounded
-                      ${index === 0 
-                        ? 'bg-blue-500 text-white' 
-                        : theme === 'light' 
-                          ? 'text-gray-600' 
-                          : 'text-gray-300'
+                      px-2 py-0.5 text-xs font-medium rounded-full
+                      ${theme === 'light' 
+                        ? 'bg-blue-100 text-blue-800' 
+                        : 'bg-blue-900 text-blue-200'
                       }
                     `}
                   >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-
-              {/* Content Cards with enhanced scroll simulation */}
-              <motion.div 
-                className="space-y-2"
-                animate={{ 
-                  y: isHovered ? [0, -5, 0] : [0, -15, 0] 
-                }}
-                transition={{ 
-                  duration: isHovered ? 3 : 2, 
-                  repeat: Infinity, 
-                  ease: "easeInOut" 
-                }}
-              >
-                {[1, 2, 3].map((item) => (
-                  <motion.div 
-                    key={item}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: item * 0.1, duration: 0.4 }}
-                    className={`
-                      p-3 rounded-lg
-                      ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-800'}
-                    `}
-                  >
-                    <div className={`h-3 rounded mb-2 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`}></div>
-                    <div className={`h-2 rounded w-3/4 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`}></div>
-                  </motion.div>
+                    {tech}
+                  </motion.span>
                 ))}
               </motion.div>
-            </div>
 
-            {/* Description */}
+              {/* Project Action Buttons */}
+              <motion.div 
+                className="mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <div className="flex gap-2">
+                  <motion.button
+                    onClick={handleLiveClick}
+                    className={`
+                      flex-1 py-2 px-3 rounded-lg font-medium text-xs transition-colors
+                      ${theme === 'light' 
+                        ? 'bg-blue-600 text-white hover:bg-blue-700' 
+                        : 'bg-blue-500 text-white hover:bg-blue-600'
+                      }
+                    `}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Live Demo
+                  </motion.button>
+                  
+                  <motion.button
+                    onClick={handleGithubClick}
+                    className={`
+                      flex-1 py-2 px-3 rounded-lg font-medium text-xs border transition-colors
+                      ${theme === 'light' 
+                        ? 'border-gray-300 text-gray-700 hover:bg-gray-50' 
+                        : 'border-gray-600 text-gray-300 hover:bg-gray-700'
+                      }
+                    `}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    GitHub
+                  </motion.button>
+                </div>
+              </motion.div>
+
+              {/* Mock Interface - Flexible to fill remaining space */}
+              <motion.div 
+                className="flex-1 flex flex-col"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+              >
+                {/* Content Cards with Scroll Animation */}
+                <motion.div 
+                  className="flex-1 space-y-2 overflow-hidden"
+                  animate={{ 
+                    y: isHovered ? [0, -10, 0] : [0, -20, 0] 
+                  }}
+                  transition={{ 
+                    duration: isHovered ? 4 : 3, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                >
+                  {[1, 2, 3, 4].map((item) => (
+                    <motion.div 
+                      key={item}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.8 + item * 0.1, duration: 0.4 }}
+                      className={`
+                        p-2 rounded-md shadow-sm
+                        ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-800'}
+                      `}
+                    >
+                      <div className={`h-2 rounded-md mb-1.5 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`} />
+                      <div className={`h-1.5 rounded-md w-3/4 mb-1 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`} />
+                      <div className={`h-1.5 rounded-md w-1/2 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </motion.div>
+            </motion.div>
+
+            {/* Bottom Action Bar */}
             <motion.div 
-              className="mt-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
+              className={`
+                flex justify-around items-center py-3 px-4 border-t flex-shrink-0
+                ${theme === 'light' ? 'border-gray-200 bg-gray-50' : 'border-gray-700 bg-gray-800'}
+              `}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9 }}
             >
-              <p className={`text-xs leading-relaxed ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>
-                {currentProject.description}
-              </p>
+              <motion.button 
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="flex flex-col items-center space-y-1 text-blue-500"
+                onClick={() => window.open(currentProject.github, '_blank')}
+              >
+                <div className="w-6 h-6 bg-blue-500 rounded-md flex items-center justify-center">
+                  <span className="text-white text-xs">🔗</span>
+                </div>
+                <span className="text-xs font-medium">Code</span>
+              </motion.button>
+              
+              <motion.button 
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="flex flex-col items-center space-y-1 text-green-500"
+                onClick={() => window.open(currentProject.playStore || currentProject.appStore, '_blank')}
+              >
+                <div className="w-6 h-6 bg-green-500 rounded-md flex items-center justify-center">
+                  <span className="text-white text-xs">🏪</span>
+                </div>
+                <span className="text-xs font-medium">Store</span>
+              </motion.button>
             </motion.div>
           </motion.div>
+        </AnimatePresence>
+      </motion.div>
 
-          {/* Bottom Action Bar */}
-          <div className={`
-            flex justify-around items-center p-4 border-t
-            ${theme === 'light' ? 'border-gray-200 bg-gray-50' : 'border-gray-700 bg-gray-800'}
-          `}>
-            <motion.button 
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="flex items-center space-x-1 text-xs text-blue-500"
-              onClick={() => window.open(currentProject.github, '_blank')}
-            >
-              <span>🔗</span>
-              <span>GitHub</span>
-            </motion.button>
-            <motion.button 
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="flex items-center space-x-1 text-xs text-green-500"
-              onClick={() => window.open(currentProject.playStore, '_blank')}
-            >
-              <span>📱</span>
-              <span>Store</span>
-            </motion.button>
-          </div>
-        </motion.div>
-
-        {/* Phone Home Indicator */}
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-gray-600 rounded-full"></div>
-      </div>
-
-      {/* Project Switcher with Auto-Play Indicator */}
-      <div className="flex items-center space-x-3 mt-4">
-        {/* Auto-play control */}
+      {/* Controls */}
+      <motion.div 
+        className="flex items-center space-x-4 mt-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.8, duration: 0.6 }}
+      >
+        {/* Auto-play Toggle */}
         <motion.button
           onClick={() => setIsAutoPlaying(!isAutoPlaying)}
           className={`
-            flex items-center space-x-1 text-xs px-2 py-1 rounded
+            flex items-center space-x-2 text-sm px-4 py-2 rounded-full border transition-all
             ${isAutoPlaying 
-              ? 'bg-green-100 text-green-700' 
+              ? 'bg-green-100 text-green-700 border-green-300' 
               : theme === 'light' 
-                ? 'bg-gray-100 text-gray-600' 
-                : 'bg-gray-800 text-gray-400'
+                ? 'bg-gray-100 text-gray-600 border-gray-300' 
+                : 'bg-gray-800 text-gray-400 border-gray-600'
             }
           `}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <span>{isAutoPlaying ? '⏸️' : '▶️'}</span>
-          <span>{isAutoPlaying ? 'Auto' : 'Manual'}</span>
+          <span className="font-medium">{isAutoPlaying ? 'Auto' : 'Manual'}</span>
         </motion.button>
 
-        {/* Project dots */}
+        {/* Project Dots */}
         <div className="flex space-x-2">
           {mobileProjects.map((_, index) => (
             <motion.button
               key={index}
               onClick={() => handleProjectSwitch(index)}
               className={`
-                w-3 h-3 rounded-full transition-colors relative
+                w-3 h-3 rounded-full transition-all relative
                 ${index === currentProjectIndex 
-                  ? 'bg-blue-500' 
+                  ? 'bg-blue-500 shadow-lg' 
                   : theme === 'light' 
-                    ? 'bg-gray-300' 
-                    : 'bg-gray-600'
+                    ? 'bg-gray-300 hover:bg-gray-400' 
+                    : 'bg-gray-600 hover:bg-gray-500'
                 }
               `}
-              whileHover={{ scale: 1.2 }}
+              whileHover={{ scale: 1.3 }}
               whileTap={{ scale: 0.8 }}
             >
-              {/* Auto-cycle progress indicator */}
               {index === currentProjectIndex && isAutoPlaying && !isHovered && (
                 <motion.div
                   className="absolute inset-0 border-2 border-blue-300 rounded-full"
                   initial={{ scale: 1, opacity: 1 }}
-                  animate={{ scale: 1.5, opacity: 0 }}
+                  animate={{ scale: 2, opacity: 0 }}
                   transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                 />
               )}
             </motion.button>
           ))}
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
