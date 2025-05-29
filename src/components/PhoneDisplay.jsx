@@ -60,7 +60,7 @@ const PhoneDisplay = () => {
       {/* Phone Frame */}
       <motion.div 
         className={`
-          relative w-72 h-[580px] 
+          relative w-72 h-[600px] 
           ${theme === 'light' ? 'bg-gray-900' : 'bg-gray-800'} 
           rounded-[2.5rem] p-2 shadow-2xl
           border-4 border-gray-700
@@ -92,7 +92,7 @@ const PhoneDisplay = () => {
           <motion.div 
             key={currentProjectIndex}
             className={`
-              w-full h-full rounded-[2rem] overflow-hidden
+              w-full h-full rounded-[2rem] overflow-hidden flex flex-col
               ${theme === 'light' ? 'bg-white' : 'bg-gray-900'}
               shadow-inner border border-gray-600
             `}
@@ -104,7 +104,7 @@ const PhoneDisplay = () => {
             {/* Status Bar */}
             <motion.div 
               className={`
-                flex justify-between items-center px-6 py-3 text-sm font-medium
+                flex justify-between items-center px-6 py-3 text-sm font-medium flex-shrink-0
                 ${theme === 'light' ? 'bg-white text-gray-900' : 'bg-gray-900 text-white'}
               `}
               initial={{ opacity: 0, y: -10 }}
@@ -133,7 +133,7 @@ const PhoneDisplay = () => {
 
             {/* App Content */}
             <motion.div 
-              className="flex-1 p-6"
+              className="flex-1 p-4 flex flex-col"
               key={`content-${currentProjectIndex}`}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -141,31 +141,51 @@ const PhoneDisplay = () => {
             >
               {/* App Header */}
               <motion.div 
-                className="flex items-center justify-between mb-6"
+                className="flex items-center justify-between mb-4"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
               >
-                <div>
-                  <h3 className={`text-xl font-bold mb-1 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
+                <div className="flex-1">
+                  <h3 className={`text-lg font-bold mb-1 ${theme === 'light' ? 'text-gray-900' : 'text-white'}`}>
                     {currentProject.title}
                   </h3>
-                  <p className={`text-sm ${theme === 'light' ? 'text-gray-500' : 'text-gray-400'}`}>
-                    Mobile Application
+                  <p className={`text-xs ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>
+                    {currentProject.description}
                   </p>
                 </div>
                 <motion.div 
-                  className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg"
+                  className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg ml-3"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <span className="text-white text-xl">📱</span>
+                  <span className="text-white text-sm">📱</span>
                 </motion.div>
+              </motion.div>
+
+              {/* Project Image */}
+              <motion.div 
+                className="mb-4"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <motion.img
+                  src={currentProject.image}
+                  alt={currentProject.title}
+                  className={`
+                    w-full h-32 object-cover rounded-lg cursor-pointer
+                    ${theme === 'light' ? 'border border-gray-200' : 'border border-gray-700'}
+                  `}
+                  onClick={() => window.open(currentProject.image, '_blank')}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                />
               </motion.div>
 
               {/* Tech Stack Pills */}
               <motion.div 
-                className="flex flex-wrap gap-2 mb-6"
+                className="flex flex-wrap gap-1.5 mb-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
@@ -177,7 +197,7 @@ const PhoneDisplay = () => {
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.3 + index * 0.1, duration: 0.3 }}
                     className={`
-                      px-3 py-1 text-xs font-medium rounded-full
+                      px-2 py-0.5 text-xs font-medium rounded-full
                       ${theme === 'light' 
                         ? 'bg-blue-100 text-blue-800' 
                         : 'bg-blue-900 text-blue-200'
@@ -191,16 +211,16 @@ const PhoneDisplay = () => {
 
               {/* Project Action Buttons */}
               <motion.div 
-                className="mb-6"
+                className="mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                <div className="flex gap-3">
+                <div className="flex gap-2">
                   <motion.button
                     onClick={handleLiveClick}
                     className={`
-                      flex-1 py-3 px-4 rounded-xl font-medium text-sm transition-colors
+                      flex-1 py-2 px-3 rounded-lg font-medium text-xs transition-colors
                       ${theme === 'light' 
                         ? 'bg-blue-600 text-white hover:bg-blue-700' 
                         : 'bg-blue-500 text-white hover:bg-blue-600'
@@ -215,7 +235,7 @@ const PhoneDisplay = () => {
                   <motion.button
                     onClick={handleGithubClick}
                     className={`
-                      flex-1 py-3 px-4 rounded-xl font-medium text-sm border transition-colors
+                      flex-1 py-2 px-3 rounded-lg font-medium text-xs border transition-colors
                       ${theme === 'light' 
                         ? 'border-gray-300 text-gray-700 hover:bg-gray-50' 
                         : 'border-gray-600 text-gray-300 hover:bg-gray-700'
@@ -229,16 +249,16 @@ const PhoneDisplay = () => {
                 </div>
               </motion.div>
 
-              {/* Mock Interface */}
+              {/* Mock Interface - Flexible to fill remaining space */}
               <motion.div 
-                className="space-y-4"
+                className="flex-1 flex flex-col"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
               >
                 {/* Content Cards with Scroll Animation */}
                 <motion.div 
-                  className="space-y-3 h-32 overflow-hidden"
+                  className="flex-1 space-y-2 overflow-hidden"
                   animate={{ 
                     y: isHovered ? [0, -10, 0] : [0, -20, 0] 
                   }}
@@ -248,34 +268,22 @@ const PhoneDisplay = () => {
                     ease: "easeInOut" 
                   }}
                 >
-                  {[1, 2, 3].map((item) => (
+                  {[1, 2, 3, 4].map((item) => (
                     <motion.div 
                       key={item}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.8 + item * 0.1, duration: 0.4 }}
                       className={`
-                        p-3 rounded-lg shadow-sm
+                        p-2 rounded-md shadow-sm
                         ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-800'}
                       `}
                     >
-                      <div className={`h-3 rounded-lg mb-2 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`} />
-                      <div className={`h-2 rounded-lg w-3/4 mb-1 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`} />
-                      <div className={`h-2 rounded-lg w-1/2 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`} />
+                      <div className={`h-2 rounded-md mb-1.5 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`} />
+                      <div className={`h-1.5 rounded-md w-3/4 mb-1 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`} />
+                      <div className={`h-1.5 rounded-md w-1/2 ${theme === 'light' ? 'bg-gray-200' : 'bg-gray-600'}`} />
                     </motion.div>
                   ))}
-                </motion.div>
-
-                {/* Description */}
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.2 }}
-                  className="mt-4"
-                >
-                  <p className={`text-xs leading-relaxed ${theme === 'light' ? 'text-gray-600' : 'text-gray-400'}`}>
-                    {currentProject.description}
-                  </p>
                 </motion.div>
               </motion.div>
             </motion.div>
@@ -283,7 +291,7 @@ const PhoneDisplay = () => {
             {/* Bottom Action Bar */}
             <motion.div 
               className={`
-                flex justify-around items-center p-4 border-t
+                flex justify-around items-center py-3 px-4 border-t flex-shrink-0
                 ${theme === 'light' ? 'border-gray-200 bg-gray-50' : 'border-gray-700 bg-gray-800'}
               `}
               initial={{ opacity: 0, y: 20 }}
@@ -296,8 +304,8 @@ const PhoneDisplay = () => {
                 className="flex flex-col items-center space-y-1 text-blue-500"
                 onClick={() => window.open(currentProject.github, '_blank')}
               >
-                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-sm">🔗</span>
+                <div className="w-6 h-6 bg-blue-500 rounded-md flex items-center justify-center">
+                  <span className="text-white text-xs">🔗</span>
                 </div>
                 <span className="text-xs font-medium">Code</span>
               </motion.button>
@@ -306,24 +314,16 @@ const PhoneDisplay = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 className="flex flex-col items-center space-y-1 text-green-500"
-                onClick={() => window.open(currentProject.playStore, '_blank')}
+                onClick={() => window.open(currentProject.playStore || currentProject.appStore, '_blank')}
               >
-                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-sm">🏪</span>
+                <div className="w-6 h-6 bg-green-500 rounded-md flex items-center justify-center">
+                  <span className="text-white text-xs">🏪</span>
                 </div>
                 <span className="text-xs font-medium">Store</span>
               </motion.button>
             </motion.div>
           </motion.div>
         </AnimatePresence>
-
-        {/* Home Indicator */}
-        <motion.div 
-          className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gray-600 rounded-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-        />
       </motion.div>
 
       {/* Controls */}

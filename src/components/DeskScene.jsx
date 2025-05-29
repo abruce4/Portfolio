@@ -135,7 +135,7 @@ const DeskScene = () => {
               >
                 <div className="w-full">
                   <motion.div
-                    className="mb-6 text-center lg:text-left"
+                    className="mb-6 text-center"
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 1, duration: 0.6 }}
@@ -172,7 +172,7 @@ const DeskScene = () => {
               >
                 <div className="w-full">
                   <motion.div
-                    className="mb-6 text-center lg:text-right"
+                    className="mb-6 text-center"
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 1.2, duration: 0.6 }}
