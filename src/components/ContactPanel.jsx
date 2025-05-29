@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
+import emailjs from '@emailjs/browser';
 
 const ContactPanel = () => {
   const { isDark } = useTheme();
@@ -11,7 +12,13 @@ const ContactPanel = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // EmailJS configuration
+  const EMAIL_SERVICE_ID = 'service_g538ciu';
+  const EMAIL_TEMPLATE_ID = 'template_qf6ctqn';
+  const EMAIL_PUBLIC_KEY = '4aPyIo5ALFm8t-HF3';
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -60,16 +67,23 @@ const ContactPanel = () => {
     }
 
     setIsSubmitting(true);
+    setShowError(false);
     
-    // Simulate form submission delay
-    setTimeout(() => {
-      // Log form data to console (as per task requirements)
-      console.log('📧 Contact Form Submission:', {
-        name: formData.name,
-        email: formData.email,
-        message: formData.message,
-        timestamp: new Date().toISOString()
-      });
+    try {
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        EMAIL_SERVICE_ID,
+        EMAIL_TEMPLATE_ID,
+        {
+          name: formData.name,        // matches {{name}} in template
+          email: formData.email,      // matches {{email}} in template  
+          message: formData.message,  // matches {{message}} in template
+          title: `Portfolio Contact from ${formData.name}`, // matches {{title}} in template
+        },
+        EMAIL_PUBLIC_KEY
+      );
+
+      console.log('📧 Email sent successfully:', result);
       
       setIsSubmitting(false);
       setShowSuccess(true);
@@ -77,16 +91,32 @@ const ContactPanel = () => {
       // Reset form
       setFormData({ name: '', email: '', message: '' });
       
-      // Hide success message after 3 seconds
-      setTimeout(() => setShowSuccess(false), 3000);
-    }, 1500);
+      // Hide success message after 5 seconds
+      setTimeout(() => setShowSuccess(false), 5000);
+      
+    } catch (error) {
+      console.error('❌ Email sending failed:', error);
+      setIsSubmitting(false);
+      setShowError(true);
+      
+      // Hide error message after 5 seconds
+      setTimeout(() => setShowError(false), 5000);
+    }
   };
 
   const downloadResume = () => {
-    // Placeholder for resume download
-    console.log('📄 Resume download requested');
-    // In a real implementation, this would trigger a download
-    alert('Resume download feature coming soon!');
+    // Create a link element and trigger download
+    const link = document.createElement('a');
+    link.href = '/assets/Lincoln_Bruce_Resume.pdf'; // Your resume file path
+    link.download = 'Lincoln_Bruce_Resume.pdf'; // Downloaded file name
+    link.target = '_blank';
+    
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    console.log('📄 Resume download initiated');
   };
 
   return (
@@ -135,7 +165,26 @@ const ContactPanel = () => {
               }`}
             >
               <span className="text-base sm:text-lg mr-2">✅</span>
-              Message sent successfully!
+              Message sent successfully! I'll get back to you soon.
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Error Message */}
+        <AnimatePresence>
+          {showError && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.9 }}
+              className={`mb-3 sm:mb-4 p-3 rounded-lg text-center text-sm sm:text-base ${
+                isDark 
+                  ? 'bg-red-800 text-red-200 border border-red-600' 
+                  : 'bg-red-100 text-red-800 border border-red-300'
+              }`}
+            >
+              <span className="text-base sm:text-lg mr-2">❌</span>
+              Failed to send message. Please try again or email directly.
             </motion.div>
           )}
         </AnimatePresence>
@@ -300,7 +349,7 @@ const ContactPanel = () => {
         }`}>
           <p>Or reach out directly:</p>
           <p className="mt-1">
-            <span className="font-medium">alex.dev@example.com</span>
+            <span className="font-medium">lincolnbruce30@gmail.com</span>
           </p>
         </div>
       </div>
