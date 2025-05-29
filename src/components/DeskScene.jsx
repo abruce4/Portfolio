@@ -1,145 +1,215 @@
 import { useTheme } from '../contexts/ThemeContext'
+import LaptopDisplay from './LaptopDisplay'
+import PhoneDisplay from './PhoneDisplay'
+import { motion } from 'framer-motion'
+
+// Animation variants
+const containerVariants = {
+  initial: { opacity: 0 },
+  animate: { 
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      staggerChildren: 0.2
+    }
+  }
+}
+
+const deskVariants = {
+  initial: { opacity: 0, scale: 0.9, y: 20 },
+  animate: { 
+    opacity: 1, 
+    scale: 1, 
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut" }
+  }
+}
+
+const deviceVariants = {
+  initial: { opacity: 0, y: 30, rotateX: -10 },
+  animate: { 
+    opacity: 1, 
+    y: 0, 
+    rotateX: 0,
+    transition: { duration: 0.7, ease: "easeOut" }
+  }
+}
+
+const accessoryVariants = {
+  initial: { opacity: 0, scale: 0 },
+  animate: { 
+    opacity: 1, 
+    scale: 1,
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+}
+
+const floatingAnimation = {
+  y: [-2, 2, -2],
+  transition: {
+    duration: 3,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }
+}
+
+const lampGlow = {
+  opacity: [0.2, 0.4, 0.2],
+  scale: [1, 1.1, 1],
+  transition: {
+    duration: 2,
+    repeat: Infinity,
+    ease: "easeInOut"
+  }
+}
 
 const DeskScene = () => {
   const { isDark } = useTheme()
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${
-      isDark 
-        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900' 
-        : 'bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100'
-    }`}>
+    <motion.div 
+      className={`min-h-screen w-full transition-colors duration-500 ${
+        isDark 
+          ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900' 
+          : 'bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100'
+      }`}
+      variants={containerVariants}
+      initial="initial"
+      animate="animate"
+    >
       {/* Desk Surface */}
-      <div className="container mx-auto px-4 py-8">
-        <div className={`relative rounded-3xl shadow-2xl transition-colors duration-500 min-h-[80vh] ${
-          isDark 
-            ? 'bg-gradient-to-br from-gray-800 to-gray-700 shadow-black/50' 
-            : 'bg-gradient-to-br from-amber-100 to-orange-200 shadow-orange-200/60'
-        }`}>
+      <div className="w-full px-4 py-8 lg:py-16">
+        <motion.div 
+          className={`relative rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl sm:shadow-2xl transition-colors duration-500 min-h-[85vh] w-full ${
+            isDark 
+              ? 'bg-gradient-to-br from-gray-800 to-gray-700 shadow-black/50' 
+              : 'bg-gradient-to-br from-amber-100 to-orange-200 shadow-orange-200/60'
+          }`}
+          variants={deskVariants}
+        >
           
-          {/* Desk Items Container */}
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 p-8 lg:p-16">
+          {/* Main Displays Container */}
+          <motion.div 
+            className="w-full h-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 p-6 sm:p-8 lg:p-12"
+            variants={containerVariants}
+          >
             
-            {/* Laptop Display Area */}
-            <div className="flex-1 max-w-2xl">
-              <div className={`relative rounded-2xl shadow-xl transition-colors duration-500 ${
-                isDark 
-                  ? 'bg-gray-900 shadow-black/40' 
-                  : 'bg-gray-800 shadow-gray-400/30'
-              }`}>
-                {/* Laptop Screen */}
-                <div className="aspect-[16/10] p-4">
-                  <div className={`w-full h-full rounded-lg border-2 transition-colors duration-500 ${
-                    isDark 
-                      ? 'bg-gray-800 border-gray-600' 
-                      : 'bg-white border-gray-300'
-                  }`}>
-                    {/* Placeholder content for web projects */}
-                    <div className="h-full flex flex-col items-center justify-center text-center p-8">
-                      <div className={`text-6xl mb-4 ${
-                        isDark ? 'text-blue-400' : 'text-blue-600'
-                      }`}>
-                        💻
-                      </div>
-                      <h3 className={`text-xl font-semibold mb-2 ${
-                        isDark ? 'text-gray-200' : 'text-gray-800'
-                      }`}>
-                        Web Projects
-                      </h3>
-                      <p className={`text-sm ${
-                        isDark ? 'text-gray-400' : 'text-gray-600'
-                      }`}>
-                        Interactive web applications showcase
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Laptop Base */}
-                <div className={`h-6 rounded-b-2xl transition-colors duration-500 ${
-                  isDark 
-                    ? 'bg-gray-700' 
-                    : 'bg-gray-600'
-                }`}></div>
+            {/* Laptop Display Area - Left Side */}
+            <motion.div 
+              className="w-full lg:w-1/2 flex justify-center lg:justify-start"
+              variants={deviceVariants}
+            >
+              <div className="w-full max-w-2xl">
+                <LaptopDisplay />
               </div>
-            </div>
+            </motion.div>
 
-            {/* Phone Display Area */}
-            <div className="flex-shrink-0">
-              <div className={`relative rounded-3xl shadow-xl transition-colors duration-500 ${
-                isDark 
-                  ? 'bg-gray-900 shadow-black/40' 
-                  : 'bg-gray-800 shadow-gray-400/30'
-              }`}>
-                {/* Phone Screen */}
-                <div className="w-64 h-[500px] p-3">
-                  <div className={`w-full h-full rounded-2xl border-2 transition-colors duration-500 ${
-                    isDark 
-                      ? 'bg-gray-800 border-gray-600' 
-                      : 'bg-white border-gray-300'
-                  }`}>
-                    {/* Notch */}
-                    <div className={`w-32 h-6 mx-auto mt-2 rounded-full transition-colors duration-500 ${
-                      isDark 
-                        ? 'bg-gray-900' 
-                        : 'bg-gray-200'
-                    }`}></div>
-                    
-                    {/* Placeholder content for mobile projects */}
-                    <div className="h-full flex flex-col items-center justify-center text-center p-6">
-                      <div className={`text-5xl mb-4 ${
-                        isDark ? 'text-green-400' : 'text-green-600'
-                      }`}>
-                        📱
-                      </div>
-                      <h3 className={`text-lg font-semibold mb-2 ${
-                        isDark ? 'text-gray-200' : 'text-gray-800'
-                      }`}>
-                        Mobile Apps
-                      </h3>
-                      <p className={`text-xs ${
-                        isDark ? 'text-gray-400' : 'text-gray-600'
-                      }`}>
-                        React Native & mobile demos
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            {/* Phone Display Area - Right Side */}
+            <motion.div 
+              className="w-full lg:w-1/2 flex justify-center lg:justify-end"
+              variants={deviceVariants}
+            >
+              <PhoneDisplay />
+            </motion.div>
+          </motion.div>
 
-          {/* Desk Accessories */}
-          <div className="absolute bottom-4 left-4 flex gap-4">
+          {/* Desk Accessories - Responsive */}
+          <motion.div 
+            className="absolute bottom-4 left-4 flex gap-3 lg:gap-4"
+            variants={containerVariants}
+          >
             {/* Coffee Cup */}
-            <div className={`w-8 h-8 rounded-full transition-colors duration-500 ${
-              isDark 
-                ? 'bg-amber-600 shadow-amber-600/50' 
-                : 'bg-amber-700 shadow-amber-700/30'
-            } shadow-lg`}>
-              <div className="text-lg text-center">☕</div>
-            </div>
+            <motion.div 
+              className={`w-8 h-8 lg:w-10 lg:h-10 rounded-full transition-colors duration-500 flex items-center justify-center ${
+                isDark 
+                  ? 'bg-amber-600 shadow-amber-600/50' 
+                  : 'bg-amber-700 shadow-amber-700/30'
+              } shadow-lg`}
+              variants={accessoryVariants}
+              animate={floatingAnimation}
+              whileHover={{ 
+                scale: 1.2, 
+                rotate: 10,
+                transition: { duration: 0.3 }
+              }}
+            >
+              <div className="text-lg lg:text-xl">☕</div>
+            </motion.div>
             
             {/* Notebook */}
-            <div className={`w-12 h-8 rounded transition-colors duration-500 ${
-              isDark 
-                ? 'bg-blue-600 shadow-blue-600/50' 
-                : 'bg-blue-700 shadow-blue-700/30'
-            } shadow-lg`}>
-              <div className="text-xs text-center text-white pt-1">📓</div>
-            </div>
-          </div>
+            <motion.div 
+              className={`w-12 h-8 lg:w-14 lg:h-10 rounded transition-colors duration-500 flex items-center justify-center ${
+                isDark 
+                  ? 'bg-blue-600 shadow-blue-600/50' 
+                  : 'bg-blue-700 shadow-blue-700/30'
+              } shadow-lg`}
+              variants={accessoryVariants}
+              whileHover={{ 
+                scale: 1.1, 
+                rotate: -5,
+                transition: { duration: 0.3 }
+              }}
+            >
+              <div className="text-sm text-white">📓</div>
+            </motion.div>
+          </motion.div>
 
-          {/* Desk Lamp (only visible in dark mode) */}
+          {/* Desk Lamp - Desktop Only in Dark Mode */}
           {isDark && (
-            <div className="absolute top-4 right-4">
-              <div className="w-4 h-12 bg-yellow-300 rounded-full opacity-20 shadow-lg shadow-yellow-300/50"></div>
-              <div className="text-2xl ml-1">💡</div>
-            </div>
+            <motion.div 
+              className="hidden lg:block absolute bottom-4 right-4"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+            >
+              <motion.div 
+                className="w-4 h-12 bg-yellow-300 rounded-full opacity-20 shadow-lg shadow-yellow-300/50"
+                animate={lampGlow}
+              />
+              <motion.div 
+                className="text-2xl ml-1"
+                animate={floatingAnimation}
+              >
+                💡
+              </motion.div>
+            </motion.div>
           )}
-        </div>
+
+          {/* Scroll Down Indicator */}
+          <motion.div 
+            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
+          >
+            <motion.div 
+              className={`text-sm mb-2 ${
+                isDark ? 'text-gray-300' : 'text-gray-600'
+              }`}
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              Scroll to explore more
+            </motion.div>
+            <motion.div 
+              className={`w-6 h-10 border-2 rounded-full flex justify-center ${
+                isDark ? 'border-gray-300' : 'border-gray-600'
+              }`}
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <motion.div 
+                className={`w-1 h-3 rounded-full mt-2 ${
+                  isDark ? 'bg-gray-300' : 'bg-gray-600'
+                }`}
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

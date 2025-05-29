@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -25,10 +28,14 @@ a:hover {
   color: #535bf2;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding: 0;
+  width: 100%;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -69,5 +76,158 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
     color: #213547;
+  }
+}
+
+/* Base responsive typography and spacing */
+@layer base {
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    width: 100%;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+  }
+
+  /* Responsive font sizes */
+  @media (max-width: 640px) {
+    html {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    html {
+      font-size: 18px;
+    }
+  }
+}
+
+/* Custom responsive utilities */
+@layer utilities {
+  /* Touch-friendly tap targets */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Responsive safe areas for mobile devices */
+  .safe-area-inset {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Mobile-first animations - reduced motion for performance */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Custom scrollbar for webkit browsers */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800 rounded-lg;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500;
+  }
+}
+
+/* Component-specific responsive styles */
+@layer components {
+  /* Mobile-first button styles */
+  .btn-mobile {
+    @apply px-4 py-3 text-base;
+    @apply sm:px-6 sm:py-3 sm:text-base;
+    @apply lg:px-8 lg:py-4 lg:text-lg;
+  }
+
+  /* Responsive card containers */
+  .card-responsive {
+    @apply p-4 rounded-lg;
+    @apply sm:p-5 sm:rounded-xl;
+    @apply lg:p-6 lg:rounded-2xl;
+  }
+
+  /* Responsive text sizing */
+  .text-responsive-xs {
+    @apply text-xs;
+    @apply sm:text-sm;
+  }
+
+  .text-responsive-sm {
+    @apply text-sm;
+    @apply sm:text-base;
+  }
+
+  .text-responsive-base {
+    @apply text-base;
+    @apply sm:text-lg;
+    @apply lg:text-xl;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg;
+    @apply sm:text-xl;
+    @apply lg:text-2xl;
+  }
+
+  .text-responsive-xl {
+    @apply text-xl;
+    @apply sm:text-2xl;
+    @apply lg:text-3xl;
+  }
+}
+
+/* Responsive layout grid system */
+@layer utilities {
+  .grid-responsive {
+    @apply grid grid-cols-1;
+    @apply sm:grid-cols-2;
+    @apply lg:grid-cols-3;
+    @apply xl:grid-cols-4;
+  }
+
+  .grid-responsive-auto {
+    @apply grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .shadow-lg {
+    box-shadow: 0 0 0 2px currentColor;
   }
 } 

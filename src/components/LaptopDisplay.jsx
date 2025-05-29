@@ -1,12 +1,11 @@
-import { useContext } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ThemeContext } from '../contexts/ThemeContext'
+import { useTheme } from '../contexts/ThemeContext'
 import ProjectCard from './ProjectCard'
 import webProjects from '../data/webProjects'
 import useAutoCycle from '../hooks/useAutoCycle'
 
 const LaptopDisplay = () => {
-  const { theme } = useContext(ThemeContext)
+  const { theme } = useTheme()
   const { 
     currentItem: currentProject, 
     currentIndex, 
