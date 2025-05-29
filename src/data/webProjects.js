@@ -3,7 +3,7 @@ export default [
     id: 1,
     title: "Interactive Developer Portfolio",
     tech: ["React", "Tailwind CSS", "Framer Motion", "Vite"],
-    liveUrl: "https://portfolio-demo.vercel.app",
+    liveUrl: "https://lincolnbruce.online/",
     github: "https://github.com/abruce4/Portfolio",
     image: "/assets/portfolio-preview.png",
     description: "A dynamic and interactive developer portfolio featuring an animated desk scene with auto-cycling project displays and theme switching capabilities."
